@@ -16,15 +16,23 @@ namespace MyOwnSearchEngine
         {
             processors.Add(new Color());
 
-            structureParsers.Add(new SeparatedList(' '));
-            structureParsers.Add(new SeparatedList(','));
+            structureParsers.Add(new Keyword("rgb"));
+            structureParsers.Add(new Invocation());
+            structureParsers.Add(new Prefix("#"));
             structureParsers.Add(new Integer());
+            structureParsers.Add(new SeparatedList(','));
+            structureParsers.Add(new SeparatedList(' '));
         }
 
         public static Engine Instance { get; } = new Engine();
 
         public static string GetResponse(string input)
         {
+            if (string.IsNullOrEmpty(input))
+            {
+                return Div("");
+            }
+
             var result = Instance.GetResponseWorker(input);
             if (string.IsNullOrEmpty(result))
             {
@@ -63,6 +71,13 @@ namespace MyOwnSearchEngine
 
         private object ParseWorker(string input)
         {
+            if (string.IsNullOrEmpty(input))
+            {
+                return null;
+            }
+
+            input = input.Trim();
+
             var list = new List<object>();
 
             foreach (var parser in structureParsers)

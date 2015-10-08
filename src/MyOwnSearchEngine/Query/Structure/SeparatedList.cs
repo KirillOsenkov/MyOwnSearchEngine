@@ -6,7 +6,7 @@ namespace MyOwnSearchEngine
 {
     public class SeparatedList : IStructureParser
     {
-        public ICollection<object> Parts { get; }
+        public IReadOnlyList<object> Parts { get; }
         public char SeparatorChar { get; }
 
         private char[] separatorCharArray;
@@ -44,10 +44,21 @@ namespace MyOwnSearchEngine
             if (query.IndexOf(separatorCharArray[0]) != -1)
             {
                 var parts = query.Split(separatorCharArray, StringSplitOptions.RemoveEmptyEntries);
-                return new SeparatedList(parts.Select(p => Engine.Parse(p)).ToArray(), SeparatorChar);
+                var parsed = parts.Select(p => Engine.Parse(p)).ToArray();
+                if (parsed.Any(p => p == null))
+                {
+                    return null;
+                }
+
+                return new SeparatedList(parsed, SeparatorChar);
             }
 
             return null;
+        }
+
+        public override string ToString()
+        {
+            return string.Join(SeparatorChar.ToString(), Parts.Select(p => p.ToString()));
         }
     }
 }
