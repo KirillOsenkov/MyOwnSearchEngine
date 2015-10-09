@@ -32,15 +32,19 @@ namespace MyOwnSearchEngine
                 {
                     double value = firstNumber.Value;
 
-                    var unit = Engine.TryGetStructure<Keyword>(list.Parts[1]).KeywordText;
-                    if (unit == "c" || unit == "celsius")
+                    var keyword = Engine.TryGetStructure<Keyword>(list.Parts[1]);
+                    if (keyword != null)
                     {
-                        return CelsiusToFahrenheit(value);
-                    }
+                        var unit = keyword.KeywordText;
+                        if (unit == "c" || unit == "celsius")
+                        {
+                            return CelsiusToFahrenheit(value);
+                        }
 
-                    if (unit == "f" || unit == "fahrenheit")
-                    {
-                        return FahrenheitToCelsius(value);
+                        if (unit == "f" || unit == "fahrenheit")
+                        {
+                            return FahrenheitToCelsius(value);
+                        }
                     }
                 }
             }

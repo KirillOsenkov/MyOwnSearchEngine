@@ -19,7 +19,9 @@ namespace MyOwnSearchEngine
             structureParsers.Add(new Keyword("rgb"));
             structureParsers.Add(new Keyword("in"));
             structureParsers.Add(new Keyword("f"));
+            structureParsers.Add(new Keyword("fahrenheit"));
             structureParsers.Add(new Keyword("c"));
+            structureParsers.Add(new Keyword("celsius"));
             structureParsers.Add(new Keyword("kg"));
             structureParsers.Add(new Keyword("kilograms"));
             structureParsers.Add(new Keyword("pounds"));
