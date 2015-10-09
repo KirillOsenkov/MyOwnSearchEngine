@@ -15,6 +15,7 @@ namespace MyOwnSearchEngine
         private Engine()
         {
             processors.Add(new Color());
+            processors.Add(new UrlDecode());
 
             structureParsers.Add(new Keyword("rgb"));
             structureParsers.Add(new Invocation());

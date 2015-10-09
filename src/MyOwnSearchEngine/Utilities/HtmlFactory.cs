@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Text;
 
 namespace MyOwnSearchEngine
@@ -10,14 +11,9 @@ namespace MyOwnSearchEngine
             return Tag(content, "div");
         }
 
-        public static string Canvas(int width, int height)
-        {
-            return Tag("", "canvas", $"width=\"{width}\"", $"height=\"{height}\"");
-        }
-
         public static string Attribute(string name, object value)
         {
-            return name + "=\"" + Convert.ToString(value) + "\"";
+            return name + "=\"" + WebUtility.HtmlEncode(Convert.ToString(value)) + "\"";
         }
 
         public static string Tag(string content, string tag, params string[] attributes)
@@ -34,7 +30,7 @@ namespace MyOwnSearchEngine
                 }
             }
             sb.Append(">");
-            sb.Append(content);
+            sb.Append(WebUtility.HtmlEncode(content));
             sb.Append("</");
             sb.Append(tag);
             sb.Append(">");
