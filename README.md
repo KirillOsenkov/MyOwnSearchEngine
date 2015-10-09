@@ -11,7 +11,9 @@ All solutions are instant as-you-type results, no need for the search button.
 
 You can preview the live site now at [http://myownsearchengine.azurewebsites.net](http://myownsearchengine.azurewebsites.net). Still looking for a good short catchy name though.
 
-Supported solutions for now:
- 1. Convert an RGB triplet to Hex color and display the color
+Supported answers for now:
+ 1. Color conversions - convert an RGB triplet to Hex color or hex color to RGB ("23 145 175", "#eeaaf0")
+ 2. Weight conversions - convert pounds to kg and vice versa ("190 pounds", "200lb", "43 kg")
+ 3. Temperature conversions - fahrenheit/celsius ("75f", "75 f", "75 fahrenheit", "23c", "23 c")
 
 Feel free to fork away and host your own modified copies. I will consider accepting very high quality pull requests that contribute new solutions or fix bugs.
