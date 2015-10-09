@@ -33,15 +33,19 @@ namespace MyOwnSearchEngine
                 {
                     double value = firstNumber.Value;
 
-                    var unit = Engine.TryGetStructure<Keyword>(list.Parts[1]).KeywordText;
-                    if (unit == "kg" || unit == "kilograms")
+                    var keyword = Engine.TryGetStructure<Keyword>(list.Parts[1]);
+                    if (keyword != null)
                     {
-                        return KgToPounds(value);
-                    }
+                        var unit = keyword.KeywordText;
+                        if (unit == "kg" || unit == "kilograms")
+                        {
+                            return KgToPounds(value);
+                        }
 
-                    if (unit == "lb" || unit == "pounds")
-                    {
-                        return PoundsToKg(value);
+                        if (unit == "lb" || unit == "pounds")
+                        {
+                            return PoundsToKg(value);
+                        }
                     }
                 }
             }

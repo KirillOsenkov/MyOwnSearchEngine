@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using Microsoft.AspNet.Mvc;
+using static MyOwnSearchEngine.HtmlFactory;
 
 namespace MyOwnSearchEngine.Controllers
 {
@@ -19,7 +20,7 @@ namespace MyOwnSearchEngine.Controllers
             }
             catch (Exception ex)
             {
-                result = "div class=\"exception\">" + ex.ToString() + "</div>";
+                result = Div(ex.ToString());
             }
 
             return result;
