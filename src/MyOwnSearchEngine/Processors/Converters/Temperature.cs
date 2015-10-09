@@ -1,9 +1,8 @@
-﻿using System;
-using static MyOwnSearchEngine.HtmlFactory;
+﻿using static MyOwnSearchEngine.HtmlFactory;
 
 namespace MyOwnSearchEngine
 {
-    public class Weight : IProcessor
+    public class Temperature : IProcessor
     {
         public string GetResult(Query query)
         {
@@ -12,14 +11,14 @@ namespace MyOwnSearchEngine
             {
                 var number = Engine.TryGetStructure<Double>(suffix.Remainder);
 
-                if (suffix.SuffixString == "kg" && number != null)
+                if (suffix.SuffixString == "f" && number != null)
                 {
-                    return KgToPounds(number.Value);
+                    return FahrenheitToCelsius(number.Value);
                 }
 
-                if (suffix.SuffixString == "lb" && number != null)
+                if (suffix.SuffixString == "c" && number != null)
                 {
-                    return PoundsToKg(number.Value);
+                    return CelsiusToFahrenheit(number.Value);
                 }
             }
 
@@ -34,14 +33,14 @@ namespace MyOwnSearchEngine
                     double value = firstNumber.Value;
 
                     var unit = Engine.TryGetStructure<Keyword>(list.Parts[1]).KeywordText;
-                    if (unit == "kg" || unit == "kilograms")
+                    if (unit == "c" || unit == "celsius")
                     {
-                        return KgToPounds(value);
+                        return CelsiusToFahrenheit(value);
                     }
 
-                    if (unit == "lb" || unit == "pounds")
+                    if (unit == "f" || unit == "fahrenheit")
                     {
-                        return PoundsToKg(value);
+                        return FahrenheitToCelsius(value);
                     }
                 }
             }
@@ -49,14 +48,14 @@ namespace MyOwnSearchEngine
             return null;
         }
 
-        private string PoundsToKg(double value)
+        private string CelsiusToFahrenheit(double value)
         {
-            return Div($"{value} pounds = {value * 0.45359237} kg");
+            return Div($"{value} Celsius = {value * 9 / 5 + 32} Fahrenheit");
         }
 
-        private string KgToPounds(double value)
+        private string FahrenheitToCelsius(double value)
         {
-            return Div($"{value} kg = {value / 0.45359237} pounds");
+            return Div($"{value} Fahrenheit = {(value - 32) * 5 / 9} Celsius");
         }
     }
 }

@@ -14,15 +14,21 @@ namespace MyOwnSearchEngine
             processors.Add(new Color());
             processors.Add(new UrlDecode());
             processors.Add(new Weight());
+            processors.Add(new Temperature());
 
             structureParsers.Add(new Keyword("rgb"));
             structureParsers.Add(new Keyword("in"));
+            structureParsers.Add(new Keyword("f"));
+            structureParsers.Add(new Keyword("c"));
             structureParsers.Add(new Keyword("kg"));
             structureParsers.Add(new Keyword("kilograms"));
             structureParsers.Add(new Keyword("pounds"));
             structureParsers.Add(new Invocation());
             structureParsers.Add(new Prefix("#"));
             structureParsers.Add(new Suffix("kg"));
+            structureParsers.Add(new Suffix("lb"));
+            structureParsers.Add(new Suffix("f"));
+            structureParsers.Add(new Suffix("c"));
             structureParsers.Add(new Integer());
             structureParsers.Add(new Double());
             structureParsers.Add(new SeparatedList(','));
