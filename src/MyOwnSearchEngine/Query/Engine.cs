@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 using static MyOwnSearchEngine.HtmlFactory;
 
 namespace MyOwnSearchEngine
@@ -16,11 +13,18 @@ namespace MyOwnSearchEngine
         {
             processors.Add(new Color());
             processors.Add(new UrlDecode());
+            processors.Add(new Weight());
 
             structureParsers.Add(new Keyword("rgb"));
+            structureParsers.Add(new Keyword("in"));
+            structureParsers.Add(new Keyword("kg"));
+            structureParsers.Add(new Keyword("kilograms"));
+            structureParsers.Add(new Keyword("pounds"));
             structureParsers.Add(new Invocation());
             structureParsers.Add(new Prefix("#"));
+            structureParsers.Add(new Suffix("kg"));
             structureParsers.Add(new Integer());
+            structureParsers.Add(new Double());
             structureParsers.Add(new SeparatedList(','));
             structureParsers.Add(new SeparatedList(' '));
         }
@@ -50,6 +54,11 @@ namespace MyOwnSearchEngine
 
         public static T TryGetStructure<T>(object instance) where T : IStructureParser
         {
+            if (instance == null)
+            {
+                return default(T);
+            }
+
             if (instance is T)
             {
                 return (T)instance;
@@ -65,6 +74,11 @@ namespace MyOwnSearchEngine
                         return (T)item;
                     }
                 }
+            }
+
+            if (instance is Integer && typeof(T) == typeof(Double))
+            {
+                return (T)(object)new Double(((Integer)instance).Value);
             }
 
             return default(T);
