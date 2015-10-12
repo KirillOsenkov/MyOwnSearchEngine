@@ -11,6 +11,7 @@ namespace MyOwnSearchEngine
 
         private Engine()
         {
+            processors.Add(new Math());
             processors.Add(new Hex());
             processors.Add(new UrlDecode());
             processors.Add(new Color());
