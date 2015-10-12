@@ -25,7 +25,10 @@ namespace MyOwnSearchEngine
                 return new Integer(result);
             }
 
-            if (int.TryParse(trimmed, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out result))
+            if (int.TryParse(trimmed, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out result) ||
+                (trimmed.Length > 2 &&
+                 trimmed.StartsWith("0x") && 
+                 int.TryParse(trimmed.Substring(2), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out result)))
             {
                 return new Integer(result);
             }

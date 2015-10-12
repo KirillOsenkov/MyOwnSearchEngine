@@ -11,8 +11,9 @@ namespace MyOwnSearchEngine
 
         private Engine()
         {
-            processors.Add(new Color());
+            processors.Add(new Hex());
             processors.Add(new UrlDecode());
+            processors.Add(new Color());
             processors.Add(new Weight());
             processors.Add(new Temperature());
 
@@ -77,9 +78,10 @@ namespace MyOwnSearchEngine
             {
                 foreach (var item in list)
                 {
-                    if (item is T)
+                    var structure = TryGetStructure<T>(item);
+                    if (structure != null)
                     {
-                        return (T)item;
+                        return structure;
                     }
                 }
             }
