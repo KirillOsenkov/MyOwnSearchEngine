@@ -22,6 +22,12 @@ namespace MyOwnSearchEngine
                     return Div(ex.ToString());
                 }
 
+                if (output.ToString() == query.OriginalInput)
+                {
+                    // tautology
+                    return null;
+                }
+
                 return Div(Escape($"{output}"));
             }
 

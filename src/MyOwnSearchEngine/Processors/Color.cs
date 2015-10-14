@@ -75,6 +75,16 @@ namespace MyOwnSearchEngine
                 }
             }
 
+            var number = query.TryGetStructure<Integer>();
+            if (number != null &&
+                number.Value >= 0 &&
+                number.Value < 16777216 &&
+                (query.OriginalInput.Length == 6 || query.OriginalInput.Length == 3) &&
+                query.OriginalInput.ContainsHexChars())
+            {
+                return GetResultFromHexString(query.OriginalInput);
+            }
+
             return null;
         }
 

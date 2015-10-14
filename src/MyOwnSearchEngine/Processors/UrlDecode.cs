@@ -12,7 +12,7 @@ namespace MyOwnSearchEngine
             var percent = input.IndexOf('%');
             while (percent != -1)
             {
-                if (percent < input.Length - 2 && input[percent + 1].IsHexChar() && input[percent + 2].IsHexChar())
+                if (percent < input.Length - 2 && input[percent + 1].IsHexOrDecimalChar() && input[percent + 2].IsHexOrDecimalChar())
                 {
                     return GetResult(input);
                 }
