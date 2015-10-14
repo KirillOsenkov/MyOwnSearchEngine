@@ -9,7 +9,8 @@ namespace MyOwnSearchEngine
     {
         public string GetResult(Query query)
         {
-            if (string.Equals(query.OriginalInput, "color", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(query.OriginalInput, "color", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(query.OriginalInput, "colors", StringComparison.OrdinalIgnoreCase))
             {
                 return Div(Img(@"http://kirillosenkov.github.io/images/ColorChartSorted.png"));
             }
