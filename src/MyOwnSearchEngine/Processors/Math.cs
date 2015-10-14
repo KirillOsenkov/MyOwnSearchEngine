@@ -22,7 +22,7 @@ namespace MyOwnSearchEngine
                     return Div(ex.ToString());
                 }
 
-                return Div($"{output}");
+                return Div(Escape($"{output}"));
             }
 
             return null;

@@ -6,6 +6,16 @@ namespace MyOwnSearchEngine
 {
     public class HtmlFactory
     {
+        public static string Escape(string text)
+        {
+            return WebUtility.HtmlEncode(text);
+        }
+
+        public static string Img(string src)
+        {
+            return Tag(null, "img", Attribute("src", src));
+        }
+
         public static string Div(string content)
         {
             return Tag(content, "div");
@@ -13,7 +23,7 @@ namespace MyOwnSearchEngine
 
         public static string Attribute(string name, object value)
         {
-            return name + "=\"" + WebUtility.HtmlEncode(Convert.ToString(value)) + "\"";
+            return name + "=\"" + Escape(Convert.ToString(value)) + "\"";
         }
 
         public static string Tag(string content, string tag, params string[] attributes)
@@ -29,11 +39,20 @@ namespace MyOwnSearchEngine
                     sb.Append(attribute);
                 }
             }
-            sb.Append(">");
-            sb.Append(WebUtility.HtmlEncode(content));
-            sb.Append("</");
-            sb.Append(tag);
-            sb.Append(">");
+
+            if (content == null)
+            {
+                sb.Append(" />");
+            }
+            else
+            {
+                sb.Append(">");
+                sb.Append(content);
+                sb.Append("</");
+                sb.Append(tag);
+                sb.Append(">");
+            }
+
             return sb.ToString();
         }
     }

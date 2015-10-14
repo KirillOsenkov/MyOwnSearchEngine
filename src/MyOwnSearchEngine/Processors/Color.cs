@@ -8,6 +8,11 @@ namespace MyOwnSearchEngine
     {
         public string GetResult(Query query)
         {
+            if (string.Equals(query.OriginalInput, "color", StringComparison.OrdinalIgnoreCase))
+            {
+                return Div(Img(@"http://kirillosenkov.github.io/images/ColorChartSorted.png"));
+            }
+
             if (query.Structure == null)
             {
                 return null;
@@ -87,7 +92,7 @@ namespace MyOwnSearchEngine
         {
             var hexColor = GetHexColor(r, g, b);
             return
-                Div($"RGB({r},{g},{b}) = {hexColor}") +
+                Div(Escape($"RGB({r},{g},{b}) = {hexColor}")) +
                 Tag("", "canvas",
                     Attribute("width", 500),
                     Attribute("height", 200),

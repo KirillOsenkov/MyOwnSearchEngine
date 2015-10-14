@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Net;
-using System.Net.Http;
-using System.Text;
 using Microsoft.AspNet.Mvc;
 using static MyOwnSearchEngine.HtmlFactory;
 
@@ -20,7 +17,7 @@ namespace MyOwnSearchEngine.Controllers
             }
             catch (Exception ex)
             {
-                result = Div(ex.ToString());
+                result = Div(Escape(ex.ToString()));
             }
 
             return result;

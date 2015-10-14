@@ -17,7 +17,7 @@ namespace MyOwnSearchEngine
 
         private string GetResult(int value)
         {
-            return Div($"{value} = 0x{value.ToString("X")}");
+            return Div(Escape($"{value} = 0x{value.ToString("X")}"));
         }
     }
 }
