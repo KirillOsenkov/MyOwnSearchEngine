@@ -20,6 +20,12 @@ namespace MyOwnSearchEngine.Controllers
                 result = Div(Escape(ex.ToString()));
             }
 
+            Context.Response.Headers.Add("Cache-Control", new[] { "no-cache" });
+            Context.Response.Headers.Add("Pragma", new[] { "no-cache" });
+            Context.Response.Headers.Add("Expires", new[] { "-1" });
+            Context.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
+            Context.Response.Headers.Add("Access-Control-Allow-Headers", new[] { "Content-Type" });
+
             return result;
         }
     }
