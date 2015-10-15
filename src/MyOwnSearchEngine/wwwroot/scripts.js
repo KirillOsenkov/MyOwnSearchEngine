@@ -6,7 +6,14 @@
     inputBox.focus();
 
     inputBox.onkeyup = function () {
-        if (this.value != lastSearchString || (event && event.keyCode == 13)) {
+        if (this.value != lastSearchString && (event && event.keyCode == 13)) {
+            lastSearchString = this.value;
+            onSearchChange();
+        }
+    };
+
+    inputBox.oninput = function () {
+        if (this.value != lastSearchString) {
             lastSearchString = this.value;
             onSearchChange();
         }
@@ -18,6 +25,8 @@ function onSearchChange() {
         if (searchTimerID == -1) {
             searchTimerID = setTimeout(runSearch, 200);
         }
+    } else {
+        loadResults("");
     }
 }
 
