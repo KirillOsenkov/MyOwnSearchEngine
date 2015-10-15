@@ -22,8 +22,8 @@ namespace MyOwnSearchEngine
             new Conversion(Kilogram, Pound, p => p / 0.45359237),
             new Conversion(Fahrenheit, Celsius, p => (p - 32) * 5 / 9),
             new Conversion(Celsius, Fahrenheit, p => p * 9 / 5 + 32),
-            new Conversion(Mile, Kilometer, p => p / 1.609344),
-            new Conversion(Kilometer, Mile, p => p * 1.609344),
+            new Conversion(Mile, Kilometer, p => p * 1.609344),
+            new Conversion(Kilometer, Mile, p => p / 1.609344),
         };
 
         private static Unit[] allUnits = null;
