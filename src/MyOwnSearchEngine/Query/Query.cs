@@ -13,7 +13,7 @@ namespace MyOwnSearchEngine
             Structure = Engine.Parse(input);
         }
 
-        public T TryGetStructure<T>() where T : IStructureParser
+        public T TryGetStructure<T>()
         {
             return Engine.TryGetStructure<T>(Structure);
         }

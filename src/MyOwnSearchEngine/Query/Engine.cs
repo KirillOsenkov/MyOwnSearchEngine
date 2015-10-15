@@ -15,24 +15,16 @@ namespace MyOwnSearchEngine
             processors.Add(new Hex());
             processors.Add(new UrlDecode());
             processors.Add(new Color());
-            processors.Add(new Weight());
-            processors.Add(new Temperature());
+            processors.Add(new UnitConverter());
+            //processors.Add(new Weight());
+            //processors.Add(new Temperature());
 
+            structureParsers.Add(new UnitParser());
             structureParsers.Add(new Keyword("rgb"));
             structureParsers.Add(new Keyword("in"));
-            structureParsers.Add(new Keyword("f"));
-            structureParsers.Add(new Keyword("fahrenheit"));
-            structureParsers.Add(new Keyword("c"));
-            structureParsers.Add(new Keyword("celsius"));
-            structureParsers.Add(new Keyword("kg"));
-            structureParsers.Add(new Keyword("kilograms"));
-            structureParsers.Add(new Keyword("pounds"));
+            structureParsers.Add(new Keyword("to"));
             structureParsers.Add(new Invocation());
             structureParsers.Add(new Prefix("#"));
-            structureParsers.Add(new Suffix("kg"));
-            structureParsers.Add(new Suffix("lb"));
-            structureParsers.Add(new Suffix("f"));
-            structureParsers.Add(new Suffix("c"));
             structureParsers.Add(new Integer());
             structureParsers.Add(new Double());
             structureParsers.Add(new SeparatedList(','));
@@ -62,7 +54,7 @@ namespace MyOwnSearchEngine
             return Instance.ParseWorker(input);
         }
 
-        public static T TryGetStructure<T>(object instance) where T : IStructureParser
+        public static T TryGetStructure<T>(object instance)
         {
             if (instance == null)
             {
