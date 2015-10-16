@@ -16,25 +16,41 @@ namespace MyOwnSearchEngine
 
             var list = query.TryGetStructure<SeparatedList>();
             if (list != null &&
-                list.SeparatorChar == ' ' &&
-                (list.Parts.Count == 2 || list.Parts.Count == 4))
+                list.SeparatorChar == ' ')
             {
-                var firstNumber = Engine.TryGetStructure<Double>(list.Parts[0]);
-                var unit = Engine.TryGetStructure<Unit>(list.Parts[1]);
-                if (firstNumber != null && unit != null)
+                if (list.Parts.Count == 2 || list.Parts.Count == 4)
                 {
-                    if (list.Parts.Count == 2)
+                    var firstNumber = Engine.TryGetStructure<Double>(list.Parts[0]);
+                    var unit = Engine.TryGetStructure<Unit>(list.Parts[1]);
+                    if (firstNumber != null && unit != null)
                     {
-                        return GetResult(firstNumber.Value, unit);
-                    }
+                        if (list.Parts.Count == 2)
+                        {
+                            return GetResult(firstNumber.Value, unit);
+                        }
 
-                    var keyword = Engine.TryGetStructure<Keyword>(list.Parts[2]);
-                    var tounit = Engine.TryGetStructure<Unit>(list.Parts[3]);
-                    if (keyword != null &&
+                        var keyword = Engine.TryGetStructure<Keyword>(list.Parts[2]);
+                        var tounit = Engine.TryGetStructure<Unit>(list.Parts[3]);
+                        if (keyword != null &&
+                            (keyword.KeywordText == "in" || keyword.KeywordText == "to") &&
+                            tounit != null)
+                        {
+                            return GetResult(firstNumber.Value, unit, tounit);
+                        }
+                    }
+                }
+
+                if (list.Parts.Count == 3)
+                {
+                    var firstTuple = Engine.TryGetStructure<Tuple<Double, Unit>>(list.Parts[0]);
+                    var keyword = Engine.TryGetStructure<Keyword>(list.Parts[1]);
+                    var toUnit = Engine.TryGetStructure<Unit>(list.Parts[2]);
+                    if (firstTuple != null &&
+                        keyword != null &&
                         (keyword.KeywordText == "in" || keyword.KeywordText == "to") &&
-                        tounit != null)
+                        toUnit != null)
                     {
-                        return GetResult(firstNumber.Value, unit, tounit);
+                        return GetResult(firstTuple.Item1.Value, firstTuple.Item2, toUnit);
                     }
                 }
             }
@@ -57,7 +73,28 @@ namespace MyOwnSearchEngine
 
             if (sb.Length == 0)
             {
-                return null;
+                Conversion first = null;
+                Conversion second = null;
+
+                // no direct conversion, try 2-step chain
+                foreach (var conversion in Units.Conversions)
+                {
+                    if (conversion.From == unit)
+                    {
+                        first = conversion;
+                    }
+
+                    if (conversion.To == toUnit)
+                    {
+                        second = conversion;
+                    }
+                }
+
+                if (first != null && second != null && first.To == second.From)
+                {
+                    var composite = new Conversion(first.From, second.To, v => second.Converter(first.Converter(v)));
+                    sb.Append(GetResult(value, composite));
+                }
             }
 
             return sb.ToString();
