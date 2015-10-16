@@ -12,13 +12,13 @@ namespace MyOwnSearchEngine
         public static readonly Unit Ton = new Unit("t", "ton", "tons");
 
         public static readonly Unit Kilometer = new Unit("km", "kilometer", "kilometers", "kilometre", "kilometres");
-        public static readonly Unit Meter = new Unit("m", "meter", "metre", "meters", "metres");
         public static readonly Unit Centimeter = new Unit("cm", "centimeter", "centimetre", "centimeters", "centimetres");
         public static readonly Unit Millimeter = new Unit("mm", "millimeter", "millimetre", "millimeters", "millimetres");
         public static readonly Unit Inch = new Unit("in", "inch", "inches");
         public static readonly Unit Foot = new Unit("ft", "foot", "feet");
         public static readonly Unit Mile = new Unit("miles", "mile");
         public static readonly Unit Yard = new Unit("yd", "yard", "yards");
+        public static readonly Unit Meter = new Unit("m", "meter", "metre", "meters", "metres");
 
         public static readonly Unit Fahrenheit = new Unit("f", "fahrenheit", "fahrenheits");
         public static readonly Unit Celsius = new Unit("c", "celsius");
