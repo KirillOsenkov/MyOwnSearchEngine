@@ -31,7 +31,14 @@ namespace MyOwnSearchEngine
         public static readonly Unit Kelvin = new Unit("k", "kelvin", "kelvins");
 
         public static readonly Unit Gallon = new Unit("gallon", "gallons");
+        public static readonly Unit Quart = new Unit("quart", "quarts");
+        public static readonly Unit Pint = new Unit("pint");
+        public static readonly Unit FluidOunce = new Unit("fl.oz.", "fl.oz");
         public static readonly Unit Liter = new Unit("l", "liter", "liters", "litre", "litres");
+        public static readonly Unit Milliliter = new Unit("ml", "milliliter", "milliliters", "millilitre", "millilitres");
+        public static readonly Unit CubicMeter = new Unit("m³", "m3");
+        public static readonly Unit CubicFoot = new Unit("ft³", "ft3");
+        public static readonly Unit CubicInch = new Unit("in³", "in3");
 
         public static readonly Unit Mpg = new Unit("mpg", "miles/gallon");
         public static readonly Unit LitersPer100Km = new Unit("liters/100km", "l/100km");
@@ -75,6 +82,23 @@ namespace MyOwnSearchEngine
             new Conversion(Celsius, Fahrenheit, p => p * 9 / 5 + 32),
             new Conversion(Kelvin, Celsius, p => p - 273.15),
             new Conversion(Celsius, Kelvin, p => p + 273.15),
+
+            new Conversion(Gallon, Liter, p => p * 3.78541178),
+            new Conversion(Liter, Gallon, p => p / 3.78541178),
+            new Conversion(Quart, Liter, p => p * 0.94635295),
+            new Conversion(Liter, Quart, p => p / 0.94635295),
+            new Conversion(Pint, Liter, p => p * 0.47317647),
+            new Conversion(Liter, Pint, p => p / 0.47317647),
+            new Conversion(FluidOunce, Liter, p => p / 33.8140227),
+            new Conversion(Liter, FluidOunce, p => p * 33.8140227),
+            new Conversion(Milliliter, Liter, p => p / 1000),
+            new Conversion(Liter, Milliliter, p => p * 1000),
+            new Conversion(CubicMeter, Liter, p => p * 1000),
+            new Conversion(Liter, CubicMeter, p => p / 1000),
+            new Conversion(CubicFoot, Liter, p => p * 28.3168466),
+            new Conversion(Liter, CubicFoot, p => p / 28.3168466),
+            new Conversion(CubicInch, Liter, p => p * 0.01638706),
+            new Conversion(Liter, CubicInch, p => p / 0.01638706),
 
             new Conversion(Mpg, LitersPer100Km, p => 235.214583084785 / p),
             new Conversion(LitersPer100Km, Mpg, p => 235.214583084785 / p),

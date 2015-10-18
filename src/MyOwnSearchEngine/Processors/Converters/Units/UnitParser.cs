@@ -42,7 +42,10 @@ namespace MyOwnSearchEngine
             {
                 foreach (var name in unit.Names)
                 {
-                    keywords.Add(name, unit);
+                    if (!keywords.ContainsKey(name))
+                    {
+                        keywords.Add(name, unit);
+                    }
                 }
             }
         }
