@@ -40,6 +40,15 @@ namespace MyOwnSearchEngine
         public static readonly Unit CubicFoot = new Unit("ft³", "ft3");
         public static readonly Unit CubicInch = new Unit("in³", "in3");
 
+        public static readonly Unit SquareMeter = new Unit("m²", "sq.m", "sq.m.");
+        public static readonly Unit SquareFoot = new Unit("sq.ft", "sq.ft.", "ft²");
+        public static readonly Unit SquareInch = new Unit("sq.in", "sq.in.", "in²");
+        public static readonly Unit SquareYard = new Unit("sq.yd", "sq.yd.", "yd²");
+        public static readonly Unit SquareMile = new Unit("sq.miles", "sq.mile", "mile²");
+        public static readonly Unit SquareKilometer = new Unit("km²", "sq.km", "sq.km.");
+        public static readonly Unit Hectare = new Unit("hectares", "hectare", "hectar", "hectars");
+        public static readonly Unit Acre = new Unit("acres", "acre");
+
         public static readonly Unit Mpg = new Unit("mpg", "miles/gallon");
         public static readonly Unit LitersPer100Km = new Unit("liters/100km", "l/100km");
 
@@ -99,6 +108,21 @@ namespace MyOwnSearchEngine
             new Conversion(Liter, CubicFoot, p => p / 28.3168466),
             new Conversion(CubicInch, Liter, p => p * 0.01638706),
             new Conversion(Liter, CubicInch, p => p / 0.01638706),
+
+            new Conversion(SquareKilometer, SquareMeter, p => p * 1000000),
+            new Conversion(SquareMeter, SquareKilometer, p => p / 1000000),
+            new Conversion(Hectare, SquareMeter, p => p * 10000),
+            new Conversion(SquareMeter, Hectare, p => p / 10000),
+            new Conversion(SquareMile, SquareMeter, p => p * 2589988.110336),
+            new Conversion(SquareMeter, SquareMile, p => p / 2589988.110336),
+            new Conversion(Acre, SquareMeter, p => p * 4046.8564224),
+            new Conversion(SquareMeter, Acre, p => p / 4046.8564224),
+            new Conversion(SquareYard, SquareMeter, p => p * 0.83612736),
+            new Conversion(SquareMeter, SquareYard, p => p / 0.83612736),
+            new Conversion(SquareFoot, SquareMeter, p => p * 0.09290304),
+            new Conversion(SquareMeter, SquareFoot, p => p / 0.09290304),
+            new Conversion(SquareInch, SquareMeter, p => p * 0.00064516),
+            new Conversion(SquareMeter, SquareInch, p => p / 0.00064516),
 
             new Conversion(Mpg, LitersPer100Km, p => 235.214583084785 / p),
             new Conversion(LitersPer100Km, Mpg, p => 235.214583084785 / p),
