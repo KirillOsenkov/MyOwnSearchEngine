@@ -1,7 +1,7 @@
-# MyOwnSearchEngine
+# http://quickinfo.io
 Extensible set of little one-off features that Google or Bing are missing, such as color and unit conversions, etc.
 
-**[http://myownsearchengine.azurewebsites.net](http://myownsearchengine.azurewebsites.net)**
+**[http://quickinfo.io](http://quickinfo.io)**
 
 Isn't it frustrating when you need to calculate something simple and your search engine just gives you a list of websites full of ads instead of instantly returning the answer as you type? They're getting better at it by adding calculator, unit-conversions, currency exchange rates, stock tickers etc. but sometimes they just fail, for instance as of October 2015 search engines don't return satisfactory results for RGB(23,175,195).
 
@@ -9,7 +9,7 @@ I'm going to build a simple extensible website where I will accumulate simple in
 
 All solutions are instant as-you-type results, no need for the search button.
 
-You can preview the live site now at [http://myownsearchengine.azurewebsites.net](http://myownsearchengine.azurewebsites.net). Still looking for a good short catchy name though.
+You can preview the live site now at [http://quickinfo.io](quickinfo.io).
 
 Supported answers for now:
  1. Color conversions - convert an RGB triplet to Hex color or hex color to RGB ("23 145 175", "#eeaaf0")
