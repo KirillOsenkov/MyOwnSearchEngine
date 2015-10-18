@@ -20,8 +20,18 @@ namespace MyOwnSearchEngine
         public static readonly Unit Yard = new Unit("yd", "yard", "yards");
         public static readonly Unit Meter = new Unit("m", "meter", "metre", "meters", "metres");
 
+        public static readonly Unit Mph = new Unit("mph", "mile/h", "miles/h", "mile/hour", "miles/hour");
+        public static readonly Unit Kmh = new Unit("kmh", "km/h", "km/hour", "kilometer/hour", "kilometers/hour");
+        public static readonly Unit FtSecond = new Unit("f/s", "fps", "ft/s", "foot/s", "foot/second", "feet/s", "feet/second");
+        public static readonly Unit Mps = new Unit("m/s", "mps", "meters/second");
+        public static readonly Unit Knot = new Unit("knot", "knots");
+
         public static readonly Unit Fahrenheit = new Unit("f", "fahrenheit", "fahrenheits");
         public static readonly Unit Celsius = new Unit("c", "celsius");
+        public static readonly Unit Kelvin = new Unit("k", "kelvin", "kelvins");
+
+        public static readonly Unit Gallon = new Unit("gallon", "gallons");
+        public static readonly Unit Liter = new Unit("l", "liter", "liters", "litre", "litres");
 
         public static readonly Unit Mpg = new Unit("mpg", "miles/gallon");
         public static readonly Unit LitersPer100Km = new Unit("liters/100km", "l/100km");
@@ -52,8 +62,19 @@ namespace MyOwnSearchEngine
             new Conversion(Millimeter, Meter, p => p / 1000),
             new Conversion(Meter, Millimeter, p => p * 1000),
 
+            new Conversion(Mph, Kmh, p => p * 1.609344),
+            new Conversion(Kmh, Mph, p => p / 1.609344),
+            new Conversion(FtSecond, Kmh, p => p * 1.09728),
+            new Conversion(Kmh, FtSecond, p => p / 1.09728),
+            new Conversion(Mps, Kmh, p => p * 3.6),
+            new Conversion(Kmh, Mps, p => p / 3.6),
+            new Conversion(Knot, Kmh, p => p * 1.852),
+            new Conversion(Kmh, Knot, p => p / 1.852),
+
             new Conversion(Fahrenheit, Celsius, p => (p - 32) * 5 / 9),
             new Conversion(Celsius, Fahrenheit, p => p * 9 / 5 + 32),
+            new Conversion(Kelvin, Celsius, p => p - 273.15),
+            new Conversion(Celsius, Kelvin, p => p + 273.15),
 
             new Conversion(Mpg, LitersPer100Km, p => 235.214583084785 / p),
             new Conversion(LitersPer100Km, Mpg, p => 235.214583084785 / p),
