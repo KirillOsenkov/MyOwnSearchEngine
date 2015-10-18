@@ -34,5 +34,15 @@
 
             return false;
         }
+
+        public static string ToHex(this char c)
+        {
+            return ToHex((int)c);
+        }
+
+        public static string ToHex(this int i)
+        {
+            return i.ToString("X");
+        }
     }
 }

@@ -11,6 +11,35 @@ namespace MyOwnSearchEngine
             return WebUtility.HtmlEncode(text);
         }
 
+        public static string Tr(string s)
+        {
+            return "<tr>" + s + "</tr>";
+        }
+
+        public static string Td(string s, string attributes = null)
+        {
+            if (attributes == null)
+            {
+                return "<td>" + s + "</td>";
+            }
+            else
+            {
+                return "<td " + attributes + ">" + s + "</td>";
+            }
+        }
+
+        public static string Th(string s, string attributes = null)
+        {
+            if (attributes == null)
+            {
+                return "<th>" + s + "</th>";
+            }
+            else
+            {
+                return "<th " + attributes + ">" + s + "</th>";
+            }
+        }
+
         public static string Img(string src)
         {
             return Tag(null, "img", Attribute("src", src));

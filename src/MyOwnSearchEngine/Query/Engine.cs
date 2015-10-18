@@ -16,6 +16,7 @@ namespace MyOwnSearchEngine
             processors.Add(new UrlDecode());
             processors.Add(new Color());
             processors.Add(new UnitConverter());
+            processors.Add(new Ascii());
 
             structureParsers.Add(new UnitParser());
             structureParsers.Add(new Keyword("rgb"));
