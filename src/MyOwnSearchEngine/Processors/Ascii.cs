@@ -41,13 +41,8 @@ namespace MyOwnSearchEngine
                     int character = i + column * columnLength;
                     var number = Td(character.ToString(), "style=\"color: lightseagreen\"");
                     var hex = Td(character.ToHex(), "style=\"color: lightgray\"");
-                    var characterText = Td(Escape(((char)character).ToString()), "style=\"column-width: 60px\"");
-                    //var escaped = Td(Escape(Escape(((char)character).ToString())));
-                    //if (escaped == characterText)
-                    //{
-                    //    escaped = Td("");
-                    //}
-
+                    var text = Encoding.GetEncoding(1252).GetString(new byte[] { (byte)character });
+                    var characterText = Td(Escape(text), "style=\"column-width: 60px\"");
                     sb.Append(number + hex + characterText);
                 }
 
