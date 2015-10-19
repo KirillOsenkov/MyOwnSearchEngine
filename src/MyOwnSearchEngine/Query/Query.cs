@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNet.Http;
 
 namespace MyOwnSearchEngine
 {
@@ -6,11 +6,20 @@ namespace MyOwnSearchEngine
     {
         public string OriginalInput { get; }
         public object Structure { get; }
+        public HttpRequest Request { get; set; }
 
         public Query(string input)
         {
             OriginalInput = input;
             Structure = Engine.Parse(input);
+        }
+
+        public string IpAddress
+        {
+            get
+            {
+                return Request?.HttpContext.Connection.RemoteIpAddress.ToString();
+            }
         }
 
         public T TryGetStructure<T>()

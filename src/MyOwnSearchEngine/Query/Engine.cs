@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNet.Http;
 using static MyOwnSearchEngine.HtmlFactory;
 
 namespace MyOwnSearchEngine
@@ -18,6 +19,7 @@ namespace MyOwnSearchEngine
             processors.Add(new UnitConverter());
             processors.Add(new Ascii());
             processors.Add(new NumberList());
+            processors.Add(new Ip());
 
             structureParsers.Add(new UnitParser());
             structureParsers.Add(new Keyword("rgb"));
@@ -33,14 +35,14 @@ namespace MyOwnSearchEngine
 
         public static Engine Instance { get; } = new Engine();
 
-        public static string GetResponse(string input)
+        public static string GetResponse(string input, HttpRequest request = null)
         {
             if (string.IsNullOrEmpty(input))
             {
                 return Div("");
             }
 
-            var result = Instance.GetResponseWorker(input);
+            var result = Instance.GetResponseWorker(input, request);
             if (string.IsNullOrEmpty(result))
             {
                 result = Div("No results found.");
@@ -121,9 +123,10 @@ namespace MyOwnSearchEngine
             }
         }
 
-        private string GetResponseWorker(string input)
+        private string GetResponseWorker(string input, HttpRequest request = null)
         {
             var query = new Query(input);
+            query.Request = request;
             var sb = new StringBuilder();
             foreach (var processor in processors)
             {

@@ -13,7 +13,7 @@ namespace MyOwnSearchEngine.Controllers
             string result = null;
             try
             {
-                result = Engine.GetResponse(query);
+                result = Engine.GetResponse(query, Request);
             }
             catch (Exception ex)
             {
