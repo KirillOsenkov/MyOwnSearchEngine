@@ -22,7 +22,7 @@ namespace MyOwnSearchEngine
                     return Div(ex.ToString());
                 }
 
-                if (output.ToString() == query.OriginalInput)
+                if (output.ToString() == query.OriginalInput.Trim())
                 {
                     // tautology
                     return null;
