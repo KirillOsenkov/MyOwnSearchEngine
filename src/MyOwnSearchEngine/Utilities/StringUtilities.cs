@@ -1,4 +1,6 @@
-﻿namespace MyOwnSearchEngine
+﻿using System.Globalization;
+
+namespace MyOwnSearchEngine
 {
     public static class StringUtilities
     {
@@ -43,6 +45,11 @@
         public static string ToHex(this int i)
         {
             return i.ToString("X");
+        }
+
+        public static bool TryParseHex(this string s, out int result)
+        {
+            return int.TryParse(s, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out result);
         }
     }
 }

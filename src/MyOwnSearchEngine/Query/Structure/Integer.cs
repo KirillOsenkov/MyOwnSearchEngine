@@ -17,6 +17,11 @@ namespace MyOwnSearchEngine
 
         public object TryParse(string query)
         {
+            return TryParseInteger(query);
+        }
+
+        public static Integer TryParseInteger(string query)
+        {
             var trimmed = query.Trim();
 
             int result = 0;
@@ -25,10 +30,10 @@ namespace MyOwnSearchEngine
                 return new Integer(result);
             }
 
-            if (int.TryParse(trimmed, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out result) ||
+            if (trimmed.TryParseHex(out result) ||
                 (trimmed.Length > 2 &&
-                 trimmed.StartsWith("0x") && 
-                 int.TryParse(trimmed.Substring(2), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out result)))
+                 trimmed.StartsWith("0x") &&
+                 trimmed.Substring(2).TryParseHex(out result)))
             {
                 return new Integer(result);
             }
