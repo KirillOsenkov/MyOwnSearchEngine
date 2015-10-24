@@ -14,13 +14,19 @@ namespace MyOwnSearchEngine
             if (input.StartsWith("\\u", StringComparison.OrdinalIgnoreCase) || input.StartsWith("U+", StringComparison.OrdinalIgnoreCase))
             {
                 int number;
-                if (input.Substring(2).TryParseHex(out number))
+                if (input.Substring(2).TryParseHex(out number) && IsUnicodeCodepoint(number))
                 {
                     return GetResult(number);
                 }
             }
 
             return null;
+        }
+
+        private bool IsUnicodeCodepoint(int number)
+        {
+            return number >= 0 && number <= 0x10ffff &&
+                (number < 0xd800 || number > 0xdfff); // surrogate code points
         }
 
         private string GetResult(int value)
