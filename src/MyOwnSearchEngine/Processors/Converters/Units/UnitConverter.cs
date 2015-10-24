@@ -15,8 +15,7 @@ namespace MyOwnSearchEngine
             }
 
             var list = query.TryGetStructure<SeparatedList>();
-            if (list != null &&
-                list.SeparatorChar == ' ')
+            if (list != null && list.SeparatorChar == ' ')
             {
                 if (list.Parts.Count == 2 || list.Parts.Count == 4)
                 {
@@ -51,6 +50,51 @@ namespace MyOwnSearchEngine
                         toUnit != null)
                     {
                         return GetResult(firstTuple.Item1.Value, firstTuple.Item2, toUnit);
+                    }
+                }
+
+                if (list.Parts.Count == 2)
+                {
+                    var firstTuple = Engine.TryGetStructure<Tuple<Double, Unit>>(list.Parts[0]);
+                    var secondTuple = Engine.TryGetStructure<Tuple<Double, Unit>>(list.Parts[1]);
+                    if (firstTuple != null &&
+                        secondTuple != null &&
+                        firstTuple.Item2 == Units.Foot &&
+                        secondTuple.Item2 == Units.Inch)
+                    {
+                        return GetResult(firstTuple.Item1.Value * 12 + secondTuple.Item1.Value, Units.Inch);
+                    }
+
+                    var secondNumber = Engine.TryGetStructure<Double>(list.Parts[1]);
+                    if (firstTuple != null &&
+                        firstTuple.Item2 == Units.Foot &&
+                        secondNumber != null)
+                    {
+                        return GetResult(firstTuple.Item1.Value * 12 + secondNumber.Value, Units.Inch);
+                    }
+                }
+
+                if (list.Parts.Count == 3 || list.Parts.Count == 4)
+                {
+                    var firstNumber = Engine.TryGetStructure<Double>(list.Parts[0]);
+                    var unit = Engine.TryGetStructure<Unit>(list.Parts[1]);
+                    var secondNumber = Engine.TryGetStructure<Double>(list.Parts[2]);
+
+                    if (list.Parts.Count == 3 &&
+                        firstNumber != null &&
+                        unit == Units.Foot &&
+                        secondNumber != null)
+                    {
+                        return GetResult(firstNumber.Value * 12 + secondNumber.Value, Units.Inch);
+                    }
+
+                    if (list.Parts.Count == 4 &&
+                        firstNumber != null &&
+                        unit == Units.Foot &&
+                        secondNumber != null &&
+                        Engine.TryGetStructure<Unit>(list.Parts[3]) == Units.Inch)
+                    {
+                        return GetResult(firstNumber.Value * 12 + secondNumber.Value, Units.Inch);
                     }
                 }
             }
