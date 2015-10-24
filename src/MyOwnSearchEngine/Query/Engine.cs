@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using Microsoft.AspNet.Http;
 using static MyOwnSearchEngine.HtmlFactory;
@@ -12,14 +15,11 @@ namespace MyOwnSearchEngine
 
         private Engine()
         {
-            processors.Add(new Math());
-            processors.Add(new Hex());
-            processors.Add(new UrlDecode());
-            processors.Add(new Color());
-            processors.Add(new UnitConverter());
-            processors.Add(new Ascii());
-            processors.Add(new NumberList());
-            processors.Add(new Ip());
+            var assembly = typeof(Engine).GetTypeInfo().Assembly;
+            var processorTypes = assembly.GetTypes()
+                .Where(t => t.GetTypeInfo().ImplementedInterfaces.Contains(typeof(IProcessor)));
+
+            processors.AddRange(processorTypes.Select(t => (IProcessor)Activator.CreateInstance(t)));
 
             structureParsers.Add(new UnitParser());
             structureParsers.Add(new Keyword("rgb"));
