@@ -27,7 +27,8 @@ namespace MyOwnSearchEngine
         {
             var sb = new StringBuilder();
             string text = char.ConvertFromUtf32(value);
-            sb.AppendLine(Div("Unicode " + value + ": " + Escape(text)));
+            sb.AppendLine(Div(Escape(text), "style=\"font-size: 72px\""));
+            sb.AppendLine(Div("Unicode code point: " + value));
             sb.AppendLine(Div("Category: " + CharUnicodeInfo.GetUnicodeCategory(text[0])));
             sb.AppendLine(Div("UTF-8: " + string.Join(" ", Encoding.UTF8.GetBytes(text).Select(b => "0x" + b.ToString("X")))));
             return sb.ToString();
