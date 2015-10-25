@@ -30,7 +30,7 @@ namespace MyOwnSearchEngine
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             // Configure the HTTP request pipeline.
-            app.UseStaticFiles();
+            app.UseFileServer();
 
             // Add MVC to the request pipeline.
             app.UseMvc();
