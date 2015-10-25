@@ -68,6 +68,19 @@ namespace MyOwnSearchEngine
                 return (T)instance;
             }
 
+            if (typeof(T) == typeof(byte[]))
+            {
+                var separatedList = TryGetStructure<SeparatedList>(instance);
+                if (separatedList != null)
+                {
+                    var byteList = separatedList.GetStructuresOfType<Integer>();
+                    if (byteList.Count == separatedList.Parts.Count && byteList.All(b => b.Value >= 0 && b.Value <= 255))
+                    {
+                        return (T)(object)(byteList.Select(b => (byte)b.Value).ToArray());
+                    }
+                }
+            }
+
             IEnumerable<object> list = instance as IEnumerable<object>;
             if (list != null)
             {

@@ -11,6 +11,13 @@ namespace MyOwnSearchEngine
         public string GetResult(Query query)
         {
             var input = query.OriginalInput;
+
+            var bytes = query.TryGetStructure<byte[]>();
+            if (bytes != null)
+            {
+                return GetResult(bytes);
+            }
+
             if (input.StartsWith("\\u", StringComparison.OrdinalIgnoreCase) || input.StartsWith("U+", StringComparison.OrdinalIgnoreCase))
             {
                 int number;
@@ -21,6 +28,33 @@ namespace MyOwnSearchEngine
             }
 
             return null;
+        }
+
+        private string GetResult(byte[] bytes)
+        {
+            string text;
+            try
+            {
+                text = Encoding.UTF8.GetString(bytes);
+            }
+            catch
+            {
+                return null;
+            }
+
+            if (text.IndexOf('\ufffd') != -1)
+            {
+                return null;
+            }
+
+            if (text.All(c => !c.IsPrintable()))
+            {
+                return null;
+            }
+
+            var sb = new StringBuilder();
+            sb.AppendLine(Div("UTF-8: " + text));
+            return sb.ToString();
         }
 
         private bool IsUnicodeCodepoint(int number)

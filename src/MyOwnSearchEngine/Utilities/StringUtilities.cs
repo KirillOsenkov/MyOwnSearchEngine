@@ -51,5 +51,15 @@ namespace MyOwnSearchEngine
         {
             return int.TryParse(s, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out result);
         }
+
+        public static bool IsPrintable(this char c)
+        {
+            if (char.IsControl(c))
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

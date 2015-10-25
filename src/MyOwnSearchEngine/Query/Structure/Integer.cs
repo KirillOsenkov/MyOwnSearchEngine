@@ -2,9 +2,16 @@
 
 namespace MyOwnSearchEngine
 {
+    public enum IntegerKind
+    {
+        Decimal,
+        Hexadecimal
+    }
+
     public class Integer : IStructureParser
     {
         public int Value { get; }
+        public IntegerKind Kind { get; private set; }
 
         public Integer()
         {
@@ -35,7 +42,7 @@ namespace MyOwnSearchEngine
                  trimmed.StartsWith("0x") &&
                  trimmed.Substring(2).TryParseHex(out result)))
             {
-                return new Integer(result);
+                return new Integer(result) { Kind = IntegerKind.Hexadecimal };
             }
 
             return null;
