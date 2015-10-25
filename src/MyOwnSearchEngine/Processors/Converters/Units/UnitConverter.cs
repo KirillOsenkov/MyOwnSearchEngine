@@ -17,46 +17,43 @@ namespace MyOwnSearchEngine
             var list = query.TryGetStructure<SeparatedList>();
             if (list != null && list.SeparatorChar == ' ')
             {
-                if (list.Parts.Count == 2 || list.Parts.Count == 4)
+                if (list.Count == 2 || list.Count == 4)
                 {
-                    var firstNumber = Engine.TryGetStructure<Double>(list.Parts[0]);
-                    var unit = Engine.TryGetStructure<Unit>(list.Parts[1]);
+                    var firstNumber = list.TryGetStructure<Double>(0);
+                    var unit = list.TryGetStructure<Unit>(1);
                     if (firstNumber != null && unit != null)
                     {
-                        if (list.Parts.Count == 2)
+                        if (list.Count == 2)
                         {
                             return GetResult(firstNumber.Value, unit);
                         }
 
-                        var keyword = Engine.TryGetStructure<Keyword>(list.Parts[2]);
-                        var tounit = Engine.TryGetStructure<Unit>(list.Parts[3]);
-                        if (keyword != null &&
-                            (keyword.KeywordText == "in" || keyword.KeywordText == "to") &&
-                            tounit != null)
+                        var keyword = list.TryGetStructure<Keyword>(2);
+                        var tounit = list.TryGetStructure<Unit>(3);
+                        if ((keyword == "in" || keyword == "to") && tounit != null)
                         {
                             return GetResult(firstNumber.Value, unit, tounit);
                         }
                     }
                 }
 
-                if (list.Parts.Count == 3)
+                if (list.Count == 3)
                 {
-                    var firstTuple = Engine.TryGetStructure<Tuple<Double, Unit>>(list.Parts[0]);
-                    var keyword = Engine.TryGetStructure<Keyword>(list.Parts[1]);
-                    var toUnit = Engine.TryGetStructure<Unit>(list.Parts[2]);
+                    var firstTuple = list.TryGetStructure<Tuple<Double, Unit>>(0);
+                    var keyword = list.TryGetStructure<Keyword>(1);
+                    var toUnit = list.TryGetStructure<Unit>(2);
                     if (firstTuple != null &&
-                        keyword != null &&
-                        (keyword.KeywordText == "in" || keyword.KeywordText == "to") &&
+                        (keyword == "in" || keyword == "to") &&
                         toUnit != null)
                     {
                         return GetResult(firstTuple.Item1.Value, firstTuple.Item2, toUnit);
                     }
                 }
 
-                if (list.Parts.Count == 2)
+                if (list.Count == 2)
                 {
-                    var firstTuple = Engine.TryGetStructure<Tuple<Double, Unit>>(list.Parts[0]);
-                    var secondTuple = Engine.TryGetStructure<Tuple<Double, Unit>>(list.Parts[1]);
+                    var firstTuple = list.TryGetStructure<Tuple<Double, Unit>>(0);
+                    var secondTuple = list.TryGetStructure<Tuple<Double, Unit>>(1);
                     if (firstTuple != null &&
                         secondTuple != null &&
                         firstTuple.Item2 == Units.Foot &&
@@ -65,7 +62,7 @@ namespace MyOwnSearchEngine
                         return GetResult(firstTuple.Item1.Value * 12 + secondTuple.Item1.Value, Units.Inch);
                     }
 
-                    var secondNumber = Engine.TryGetStructure<Double>(list.Parts[1]);
+                    var secondNumber = list.TryGetStructure<Double>(1);
                     if (firstTuple != null &&
                         firstTuple.Item2 == Units.Foot &&
                         secondNumber != null)
@@ -74,13 +71,13 @@ namespace MyOwnSearchEngine
                     }
                 }
 
-                if (list.Parts.Count == 3 || list.Parts.Count == 4)
+                if (list.Count == 3 || list.Count == 4)
                 {
-                    var firstNumber = Engine.TryGetStructure<Double>(list.Parts[0]);
-                    var unit = Engine.TryGetStructure<Unit>(list.Parts[1]);
-                    var secondNumber = Engine.TryGetStructure<Double>(list.Parts[2]);
+                    var firstNumber = list.TryGetStructure<Double>(0);
+                    var unit = list.TryGetStructure<Unit>(1);
+                    var secondNumber = list.TryGetStructure<Double>(2);
 
-                    if (list.Parts.Count == 3 &&
+                    if (list.Count == 3 &&
                         firstNumber != null &&
                         unit == Units.Foot &&
                         secondNumber != null)
@@ -88,11 +85,11 @@ namespace MyOwnSearchEngine
                         return GetResult(firstNumber.Value * 12 + secondNumber.Value, Units.Inch);
                     }
 
-                    if (list.Parts.Count == 4 &&
+                    if (list.Count == 4 &&
                         firstNumber != null &&
                         unit == Units.Foot &&
                         secondNumber != null &&
-                        Engine.TryGetStructure<Unit>(list.Parts[3]) == Units.Inch)
+                        list.TryGetStructure<Unit>(3) == Units.Inch)
                     {
                         return GetResult(firstNumber.Value * 12 + secondNumber.Value, Units.Inch);
                     }

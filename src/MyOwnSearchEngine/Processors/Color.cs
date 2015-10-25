@@ -35,7 +35,7 @@ namespace MyOwnSearchEngine
                     string.Equals(invocation.Prefix, "rgb", StringComparison.OrdinalIgnoreCase))
                 {
                     list = Engine.TryGetStructure<SeparatedList>(invocation.ArgumentListParsed);
-                    if (list.Parts.Count != 3)
+                    if (list.Count != 3)
                     {
                         list = null;
                     }
@@ -43,10 +43,10 @@ namespace MyOwnSearchEngine
             }
 
             if (list != null &&
-                (list.Parts.Count == 3 ||
-                (list.Parts.Count == 4 &&
-                    ((list.Parts[0] is Keyword && list.Parts[0].ToString() == "rgb") ||
-                     (list.Parts[3] is Keyword && list.Parts[3].ToString() == "rgb")))))
+                (list.Count == 3 ||
+                (list.Count == 4 &&
+                    (list.TryGetStructure<Keyword>(0) == "rgb" ||
+                     list.TryGetStructure<Keyword>(3) == "rgb"))))
             {
                 var intList = list.GetStructuresOfType<Integer>();
                 if (intList.Count == 3)

@@ -13,7 +13,7 @@ namespace MyOwnSearchEngine
             if (list != null)
             {
                 var numbersList = list.GetStructuresOfType<Double>();
-                if (numbersList != null && numbersList.Count == list.Parts.Count)
+                if (numbersList != null && numbersList.Count == list.Count)
                 {
                     return GetResult(numbersList);
                 }

@@ -25,6 +25,7 @@ namespace MyOwnSearchEngine
             structureParsers.Add(new Keyword("rgb"));
             structureParsers.Add(new Keyword("in"));
             structureParsers.Add(new Keyword("to"));
+            structureParsers.Add(new Keyword("hex"));
             structureParsers.Add(new Invocation());
             structureParsers.Add(new Prefix("#"));
             structureParsers.Add(new Integer());
@@ -74,7 +75,7 @@ namespace MyOwnSearchEngine
                 if (separatedList != null)
                 {
                     var byteList = separatedList.GetStructuresOfType<Integer>();
-                    if (byteList.Count == separatedList.Parts.Count && byteList.All(b => b.Value >= 0 && b.Value <= 255))
+                    if (byteList.Count == separatedList.Count && byteList.All(b => b.Value >= 0 && b.Value <= 255))
                     {
                         return (T)(object)(byteList.Select(b => (byte)b.Value).ToArray());
                     }

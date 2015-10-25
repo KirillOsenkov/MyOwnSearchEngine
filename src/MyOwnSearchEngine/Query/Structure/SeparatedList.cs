@@ -39,6 +39,24 @@ namespace MyOwnSearchEngine
             return result;
         }
 
+        public T TryGetStructure<T>(int index)
+        {
+            if (index < 0 || index >= Count)
+            {
+                return default(T);
+            }
+
+            return Engine.TryGetStructure<T>(Parts[index]);
+        }
+
+        public int Count
+        {
+            get
+            {
+                return Parts.Count;
+            }
+        }
+
         public object TryParse(string query)
         {
             if (query.IndexOf(separatorCharArray[0]) != -1)
