@@ -11,6 +11,11 @@ namespace MyOwnSearchEngine
             return WebUtility.HtmlEncode(text);
         }
 
+        public static string UrlEncode(string text)
+        {
+            return WebUtility.UrlEncode(text);
+        }
+
         public static string Tr(string s)
         {
             return "<tr>" + s + "</tr>";
@@ -48,6 +53,11 @@ namespace MyOwnSearchEngine
         public static string H1(string content, params string[] attributes)
         {
             return Tag(content, "h1", attributes);
+        }
+
+        public static string SearchLink(string content, string hyperlink)
+        {
+            return Tag(content, "a", Attribute("href", "?" + UrlEncode(hyperlink)));
         }
 
         public static string Div(string content, params string[] attributes)

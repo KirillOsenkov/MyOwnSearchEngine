@@ -121,21 +121,24 @@ namespace MyOwnSearchEngine
 
             result.AppendLine(GetCanvas(hexColor, 500, 200, ";margin-top:20px"));
 
-            if (knownColor == null)
+            var nearestColors = GetNearestColors(r, g, b).Take(5);
+            result.AppendLine(Div("Closest named colors:"));
+            foreach (var nearestColor in nearestColors)
             {
-                var nearestColors = GetNearestColors(r, g, b).Take(5);
-                result.AppendLine(Div("Closest named colors:"));
-                foreach (var nearestColor in nearestColors)
+                if (nearestColor == knownColor)
                 {
-                    var canvas = GetCanvas(nearestColor, 60, 16);
-                    result.AppendLine(
-                        Div(nearestColor +
-                            " ( #" +
-                            knownColors[nearestColor] +
-                            "  " +
-                            canvas +
-                            " )"));
+                    continue;
                 }
+
+                var canvas = GetCanvas(nearestColor, 60, 16);
+                var hex = "#" + knownColors[nearestColor];
+                result.AppendLine(
+                    Div(nearestColor +
+                        " ( " +
+                        SearchLink(hex, hex) +
+                        "  " +
+                        SearchLink(canvas, hex) +
+                        " )"));
             }
 
             return result.ToString();
