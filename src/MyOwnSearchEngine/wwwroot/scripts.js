@@ -53,8 +53,17 @@ function runSearch() {
     search();
 }
 
-function search() {
-    var query = "api/answers/?query=" + encodeURIComponent(inputBox.value);
+function searchFor(query) {
+    inputBox.value = query;
+    search(query);
+}
+
+function search(query) {
+    if (!query) {
+        query = inputBox.value;
+    }
+
+    query = "api/answers/?query=" + encodeURIComponent(query);
 
     lastQuery = getUrl(query, loadResults);
 }

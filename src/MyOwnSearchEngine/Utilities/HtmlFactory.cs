@@ -57,7 +57,9 @@ namespace MyOwnSearchEngine
 
         public static string SearchLink(string content, string hyperlink)
         {
-            return Tag(content, "a", Attribute("href", "?" + UrlEncode(hyperlink)));
+            var href = Attribute("href", "?" + UrlEncode(hyperlink));
+            var onclick = Attribute("onclick", "searchFor(\"" + Escape(hyperlink) + "\");return false;");
+            return Tag(content, "a", href, onclick);
         }
 
         public static string Div(string content, params string[] attributes)
