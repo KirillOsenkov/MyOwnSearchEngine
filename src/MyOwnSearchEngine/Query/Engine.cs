@@ -36,6 +36,8 @@ namespace MyOwnSearchEngine
 
         public static Engine Instance { get; } = new Engine();
 
+        private static readonly char[] multipleQuerySeparator = new[] { '|' };
+
         public static string GetResponse(string input, HttpRequest request = null)
         {
             if (string.IsNullOrEmpty(input))
@@ -43,13 +45,44 @@ namespace MyOwnSearchEngine
                 return Div("");
             }
 
-            var result = Instance.GetResponseWorker(input, request);
-            if (string.IsNullOrEmpty(result))
+            if (input.IndexOf('|') != -1)
             {
-                result = Div("No results found.");
-            }
+                var sb = new StringBuilder();
+                var multipleQueries = input.Split(multipleQuerySeparator, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var singleQuery in multipleQueries)
+                {
+                    var result = Instance.GetSingleResponseWorker(singleQuery, request);
+                    if (result != null)
+                    {
+                        sb.AppendLine(H1(singleQuery));
+                        if (!string.IsNullOrEmpty(result))
+                        {
+                            sb.AppendLine(Div(result));
+                        }
+                        else
+                        {
+                            sb.AppendLine(Div("No result."));
+                        }
+                    }
+                }
 
-            return result;
+                if (sb.Length == 0)
+                {
+                    sb.AppendLine(Div("No results."));
+                }
+
+                return sb.ToString();
+            }
+            else
+            {
+                var result = Instance.GetSingleResponseWorker(input, request);
+                if (string.IsNullOrEmpty(result))
+                {
+                    result = Div("No results.");
+                }
+
+                return result;
+            }
         }
 
         public static object Parse(string input)
@@ -138,7 +171,7 @@ namespace MyOwnSearchEngine
             }
         }
 
-        private string GetResponseWorker(string input, HttpRequest request = null)
+        private string GetSingleResponseWorker(string input, HttpRequest request = null)
         {
             var query = new Query(input);
             query.Request = request;

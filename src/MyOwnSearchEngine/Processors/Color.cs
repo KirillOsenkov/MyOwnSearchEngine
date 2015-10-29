@@ -12,14 +12,16 @@ namespace MyOwnSearchEngine
     {
         public string GetResult(Query query)
         {
-            if (string.Equals(query.OriginalInput, "color", StringComparison.OrdinalIgnoreCase) ||
-                string.Equals(query.OriginalInput, "colors", StringComparison.OrdinalIgnoreCase))
+            var input = query.OriginalInput.Trim();
+
+            if (string.Equals(input, "color", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(input, "colors", StringComparison.OrdinalIgnoreCase))
             {
                 return Div(Img(@"http://kirillosenkov.github.io/images/ColorChartSorted.png"));
             }
 
             string knownColor = null;
-            if (knownColors.TryGetValue(query.OriginalInput, out knownColor))
+            if (knownColors.TryGetValue(input.Trim(), out knownColor))
             {
                 return GetResultFromHexString(knownColor);
             }

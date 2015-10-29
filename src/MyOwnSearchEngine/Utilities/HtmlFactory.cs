@@ -45,6 +45,11 @@ namespace MyOwnSearchEngine
             return Tag(null, "img", Attribute("src", src));
         }
 
+        public static string H1(string content, params string[] attributes)
+        {
+            return Tag(content, "h1", attributes);
+        }
+
         public static string Div(string content, params string[] attributes)
         {
             return Tag(content, "div", attributes);
