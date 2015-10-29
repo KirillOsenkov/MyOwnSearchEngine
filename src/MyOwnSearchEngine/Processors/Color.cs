@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using static MyOwnSearchEngine.HtmlFactory;
+using System.Linq;
+using System.Text;
 using static System.Math;
+using static MyOwnSearchEngine.HtmlFactory;
 
 namespace MyOwnSearchEngine
 {
@@ -115,31 +117,36 @@ namespace MyOwnSearchEngine
         private string GetResult(int r, int g, int b)
         {
             var hexColor = GetHexColor(r, g, b);
-            string result = Div(Escape($"RGB({r},{g},{b}) = {hexColor}"));
+            var result = new StringBuilder();
 
             string knownColor = null;
             if (knownColorNames.TryGetValue(r + g * 256 + b * 65536, out knownColor))
             {
-                result = Div(knownColor) + result;
+                result.AppendLine(Div(knownColor));
             }
 
-            result += GetCanvas(hexColor, 500, 200, ";margin-top:20px");
+            result.AppendLine(Div(Escape($"RGB({r},{g},{b}) = {hexColor}")));
+
+            result.AppendLine(GetCanvas(hexColor, 500, 200, ";margin-top:20px"));
 
             if (knownColor == null)
             {
-                var nearestColor = GetNearestColor(r, g, b);
-                var canvas = GetCanvas(nearestColor, 60, 16);
-                result = result +
-                    Div("Nearest named color: " +
-                        nearestColor +
-                        " (#" +
-                        knownColors[nearestColor] +
-                        "  " +
-                        canvas +
-                        " )");
+                var nearestColors = GetNearestColors(r, g, b).Take(5);
+                result.AppendLine(Div("Closest named colors:"));
+                foreach (var nearestColor in nearestColors)
+                {
+                    var canvas = GetCanvas(nearestColor, 60, 16);
+                    result.AppendLine(
+                        Div(nearestColor +
+                            " ( #" +
+                            knownColors[nearestColor] +
+                            "  " +
+                            canvas +
+                            " )"));
+                }
             }
 
-            return result;
+            return result.ToString();
         }
 
         private static string GetCanvas(string hexColor, int width, int height, string additionalStyle = "")
@@ -150,10 +157,9 @@ namespace MyOwnSearchEngine
                 Attribute("style", "background:" + hexColor + additionalStyle));
         }
 
-        private string GetNearestColor(int r, int g, int b)
+        private IEnumerable<string> GetNearestColors(int r, int g, int b)
         {
-            string nearestColorSoFar = null;
-            double nearestDistance = double.PositiveInfinity;
+            var colorMapByDistance = new List<Tuple<string, double>>();
 
             foreach (var kvp in knownColorNames)
             {
@@ -162,14 +168,11 @@ namespace MyOwnSearchEngine
                 int knownG = (knownColor >> 8) % 256;
                 int knownB = (knownColor >> 16) % 256;
                 double distance = Distance(r, g, b, knownR, knownG, knownB);
-                if (distance < nearestDistance)
-                {
-                    nearestDistance = distance;
-                    nearestColorSoFar = kvp.Value;
-                }
+                colorMapByDistance.Add(Tuple.Create(kvp.Value, distance));
             }
 
-            return nearestColorSoFar;
+            colorMapByDistance.Sort((t1, t2) => t1.Item2.CompareTo(t2.Item2));
+            return colorMapByDistance.Select(t => t.Item1);
         }
 
         private double Distance(int r1, int g1, int b1, int r2, int g2, int b2)
