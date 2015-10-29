@@ -21,7 +21,8 @@
         if (query) {
             query = decodeURIComponent(query);
             inputBox.value = query;
-            inputBox.oninput();
+            lastSearchString = query;
+            search();
         }
     }
 }
