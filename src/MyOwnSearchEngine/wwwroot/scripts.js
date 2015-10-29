@@ -6,24 +6,36 @@
     inputBox.focus();
 
     inputBox.onkeyup = function () {
-        if (this.value != lastSearchString && (event && event.keyCode == 13)) {
-            lastSearchString = this.value;
+        if (event && event.keyCode == 13) {
             onSearchChange();
         }
     };
 
     inputBox.oninput = function () {
-        if (this.value != lastSearchString) {
-            lastSearchString = this.value;
-            onSearchChange();
-        }
+        onSearchChange();
     };
+
+    var query = document.location.search;
+    if (query) {
+        query = query.slice(1);
+        if (query) {
+            query = decodeURIComponent(query);
+            inputBox.value = query;
+            inputBox.oninput();
+        }
+    }
 }
 
 function onSearchChange() {
+    if (inputBox.value == lastSearchString) {
+        return;
+    }
+
+    lastSearchString = inputBox.value;
+
     if (inputBox.value.length > 0) {
         if (searchTimerID == -1) {
-            searchTimerID = setTimeout(runSearch, 200);
+            searchTimerID = setTimeout(runSearch, 600);
         }
     } else {
         loadResults("");
@@ -66,5 +78,18 @@ function loadResults(data) {
     var container = document.getElementById("outputDiv");
     if (container) {
         container.innerHTML = data;
+        if (data) {
+            updateUrl();
+        }
+    }
+}
+
+function updateUrl() {
+    var query = inputBox.value;
+    if (query) {
+        query = "?" + encodeURIComponent(query);
+        if (document.location.search !== query) {
+            top.history.replaceState(null, top.document.title, query);
+        }
     }
 }

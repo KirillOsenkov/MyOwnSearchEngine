@@ -47,7 +47,7 @@ namespace MyOwnSearchEngine
                 return null;
             }
 
-            if (text.All(c => !c.IsPrintable()))
+            if (text.Any(c => !c.IsPrintable()))
             {
                 return null;
             }
