@@ -121,7 +121,7 @@ namespace MyOwnSearchEngine
 
             result.AppendLine(GetCanvas(hexColor, 500, 200, ";margin-top:20px"));
 
-            var nearestColors = GetNearestColors(r, g, b).Take(5);
+            var nearestColors = GetNearestColors(r, g, b).Take(7);
             result.AppendLine(Div("Closest named colors:"));
             foreach (var nearestColor in nearestColors)
             {
