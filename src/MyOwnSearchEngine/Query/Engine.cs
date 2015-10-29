@@ -95,7 +95,8 @@ namespace MyOwnSearchEngine
                 }
             }
 
-            if (instance is Integer && typeof(T) == typeof(Double))
+            var integer = instance as Integer;
+            if (integer != null && integer.Kind == IntegerKind.Decimal && typeof(T) == typeof(Double))
             {
                 return (T)(object)new Double(((Integer)instance).Value);
             }
