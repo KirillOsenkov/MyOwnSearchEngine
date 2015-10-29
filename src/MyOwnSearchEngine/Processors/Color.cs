@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using static MyOwnSearchEngine.HtmlFactory;
+using static System.Math;
 
 namespace MyOwnSearchEngine
 {
@@ -116,17 +117,67 @@ namespace MyOwnSearchEngine
             var hexColor = GetHexColor(r, g, b);
             string result = Div(Escape($"RGB({r},{g},{b}) = {hexColor}"));
 
-            string knownColor;
+            string knownColor = null;
             if (knownColorNames.TryGetValue(r + g * 256 + b * 65536, out knownColor))
             {
                 result = Div(knownColor) + result;
             }
 
-            result += Tag("", "canvas",
-                    Attribute("width", 500),
-                    Attribute("height", 200),
-                    Attribute("style", "background:" + hexColor + ";margin-top:20px"));
+            result += GetCanvas(hexColor, 500, 200, ";margin-top:20px");
+
+            if (knownColor == null)
+            {
+                var nearestColor = GetNearestColor(r, g, b);
+                var canvas = GetCanvas(nearestColor, 60, 16);
+                result = result +
+                    Div("Nearest named color: " +
+                        nearestColor +
+                        " (#" +
+                        knownColors[nearestColor] +
+                        "  " +
+                        canvas +
+                        " )");
+            }
+
             return result;
+        }
+
+        private static string GetCanvas(string hexColor, int width, int height, string additionalStyle = "")
+        {
+            return Tag("", "canvas",
+                Attribute("width", width),
+                Attribute("height", height),
+                Attribute("style", "background:" + hexColor + additionalStyle));
+        }
+
+        private string GetNearestColor(int r, int g, int b)
+        {
+            string nearestColorSoFar = null;
+            double nearestDistance = double.PositiveInfinity;
+
+            foreach (var kvp in knownColorNames)
+            {
+                int knownColor = kvp.Key;
+                int knownR = knownColor % 256;
+                int knownG = (knownColor >> 8) % 256;
+                int knownB = (knownColor >> 16) % 256;
+                double distance = Distance(r, g, b, knownR, knownG, knownB);
+                if (distance < nearestDistance)
+                {
+                    nearestDistance = distance;
+                    nearestColorSoFar = kvp.Value;
+                }
+            }
+
+            return nearestColorSoFar;
+        }
+
+        private double Distance(int r1, int g1, int b1, int r2, int g2, int b2)
+        {
+            double dr = (r1 - r2) / 255.0;
+            double dg = (g1 - g2) / 255.0;
+            double db = (b1 - b2) / 255.0;
+            return Sqrt(dr * dr * 0.299 + dg * dg * 0.587 + db * db * 0.114);
         }
 
         private string GetHexColor(int r, int g, int b)
