@@ -48,12 +48,14 @@ namespace MyOwnSearchEngine
             if (input.IndexOf('|') != -1)
             {
                 var sb = new StringBuilder();
+                sb.AppendLine("<div style=\"display: flex;\">");
                 var multipleQueries = input.Split(multipleQuerySeparator, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var singleQuery in multipleQueries)
                 {
                     var result = Instance.GetSingleResponseWorker(singleQuery, request);
                     if (result != null)
                     {
+                        sb.AppendLine("<div style=\"margin: 20px\">");
                         sb.AppendLine(H1(singleQuery));
                         if (!string.IsNullOrEmpty(result))
                         {
@@ -63,6 +65,8 @@ namespace MyOwnSearchEngine
                         {
                             sb.AppendLine(Div("No result."));
                         }
+
+                        sb.AppendLine("</div>");
                     }
                 }
 
@@ -70,6 +74,8 @@ namespace MyOwnSearchEngine
                 {
                     sb.AppendLine(Div("No results."));
                 }
+
+                sb.AppendLine("</div>");
 
                 return sb.ToString();
             }
