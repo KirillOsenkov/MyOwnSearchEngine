@@ -34,6 +34,15 @@ namespace MyOwnSearchEngine
                         }
                     }
                 }
+                else
+                {
+                    number = separatedList.TryGetStructure<Integer>(1);
+                    var keyword1 = separatedList.TryGetStructure<Keyword>(0);
+                    if (number != null && keyword1 != null && keyword1 == "hex" && separatedList.Count == 2)
+                    {
+                        return GetResult(number.Value);
+                    }
+                }
             }
 
             return null;
