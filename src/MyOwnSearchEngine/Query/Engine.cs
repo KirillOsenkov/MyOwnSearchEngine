@@ -177,6 +177,11 @@ namespace MyOwnSearchEngine
             }
         }
 
+        public IEnumerable<IProcessor> Processors
+        {
+            get { return this.processors; }
+        }
+
         private string GetSingleResponseWorker(string input, HttpRequest request = null)
         {
             var query = new Query(input);
