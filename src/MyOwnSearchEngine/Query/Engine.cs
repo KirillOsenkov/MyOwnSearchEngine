@@ -55,7 +55,7 @@ namespace MyOwnSearchEngine
                     var result = Instance.GetSingleResponseWorker(singleQuery, request);
                     if (result != null)
                     {
-                        sb.AppendLine("<div style=\"margin: 20px\">");
+                        sb.AppendLine("<div style=\"margin: 0px\">");
                         sb.AppendLine(H1(singleQuery));
                         if (!string.IsNullOrEmpty(result))
                         {
@@ -84,7 +84,7 @@ namespace MyOwnSearchEngine
                 var result = Instance.GetSingleResponseWorker(input, request);
                 if (string.IsNullOrEmpty(result))
                 {
-                    result = Div("No results.");
+                    result = Div("No results. Enter ? for help.");
                 }
 
                 return result;
