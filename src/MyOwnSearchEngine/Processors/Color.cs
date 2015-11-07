@@ -119,7 +119,7 @@ namespace MyOwnSearchEngine
 
             result.AppendLine(Div(Escape($"RGB({r},{g},{b}) = {hexColor}")));
 
-            result.AppendLine(GetCanvas(hexColor, 500, 200, ";margin-top:20px"));
+            result.AppendLine(GetCanvas(hexColor, 350, 215, ";margin-top:20px"));
 
             var nearestColors = GetNearestColors(r, g, b).Take(9);
             result.AppendLine(Div("Closest named colors:"));
