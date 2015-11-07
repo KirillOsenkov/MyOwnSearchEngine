@@ -1,13 +1,11 @@
 ﻿function onPageLoad() {
-    searchTimerID = -1;
     lastQuery = null;
-    lastSearchString = inputBox.value;
 
     inputBox.focus();
 
     inputBox.onkeyup = function () {
         if (event && event.keyCode == 13) {
-            onSearchChange();
+            search();
         }
     };
 
@@ -28,31 +26,25 @@
 }
 
 function onSearchChange() {
-    if (inputBox.value == lastSearchString) {
-        return;
-    }
-
-    lastSearchString = inputBox.value;
-
     if (inputBox.value.length > 0) {
-        if (searchTimerID == -1) {
-            searchTimerID = setTimeout(runSearch, 600);
-        }
+        lastInputTime = new Date();
+        setTimeout(checkTimeout, 600);
     } else {
+        lastQuery = "";
         loadResults("");
     }
 }
 
-function runSearch() {
-    searchTimerID = -1;
-    if (typeof lastQuery === "object" && lastQuery !== null) {
-        lastQuery.abort();
-        lastQuery = null;
+function checkTimeout() {
+    var current = new Date();
+    if ((current.getTime() - lastInputTime.getTime()) <= 500) {
+        return;
     }
 
     search();
 }
 
+// this is called from generated onclick handlers on hyperlinks
 function searchFor(query) {
     inputBox.value = query;
     search(query);
@@ -63,9 +55,15 @@ function search(query) {
         query = inputBox.value;
     }
 
+    if (lastQuery === query) {
+        return;
+    }
+
+    lastQuery = query;
+
     query = "api/answers/?query=" + encodeURIComponent(query);
 
-    lastQuery = getUrl(query, loadResults);
+    getUrl(query, loadResults);
 }
 
 function getUrl(url, callback) {
@@ -88,9 +86,7 @@ function loadResults(data) {
     var container = document.getElementById("outputDiv");
     if (container) {
         container.innerHTML = data;
-        if (data) {
-            updateUrl();
-        }
+        updateUrl();
     }
 }
 
@@ -101,5 +97,7 @@ function updateUrl() {
         if (document.location.search !== query) {
             top.history.replaceState(null, top.document.title, query);
         }
+    } else {
+        top.history.replaceState(null, top.document.title, "");
     }
 }
