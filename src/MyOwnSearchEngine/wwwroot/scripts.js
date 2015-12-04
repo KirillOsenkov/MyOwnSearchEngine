@@ -28,7 +28,7 @@
 function onSearchChange() {
     if (inputBox.value.length > 0) {
         lastInputTime = new Date();
-        setTimeout(checkTimeout, 600);
+        setTimeout(checkTimeout, 400);
     } else {
         lastQuery = "";
         loadResults("");
@@ -37,7 +37,7 @@ function onSearchChange() {
 
 function checkTimeout() {
     var current = new Date();
-    if ((current.getTime() - lastInputTime.getTime()) <= 500) {
+    if ((current.getTime() - lastInputTime.getTime()) <= 300) {
         return;
     }
 
