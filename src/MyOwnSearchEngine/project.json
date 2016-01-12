@@ -3,19 +3,19 @@
   "version": "1.0.0-*",
 
   "dependencies": {
+    "GuiLabs.MathParser": "1.0.2",
     "Microsoft.AspNet.Mvc": "6.0.0-beta7",
     "Microsoft.AspNet.Server.IIS": "1.0.0-beta7",
     "Microsoft.AspNet.Server.WebListener": "1.0.0-beta7",
     "Microsoft.AspNet.StaticFiles": "1.0.0-beta7",
-    "GuiLabs.MathParser": "1.0.2",
+    "System.Runtime.Numerics": "4.0.0"
   },
 
   "commands": {
-    "web": "Microsoft.AspNet.Hosting --config hosting.ini",
+    "web": "Microsoft.AspNet.Hosting --config hosting.ini"
   },
 
   "frameworks": {
-    "dnx451": { },
     "dnxcore50": { }
   },
 

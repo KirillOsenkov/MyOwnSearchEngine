@@ -1,4 +1,5 @@
-﻿using static MyOwnSearchEngine.HtmlFactory;
+﻿using System.Numerics;
+using static MyOwnSearchEngine.HtmlFactory;
 
 namespace MyOwnSearchEngine
 {
@@ -48,7 +49,7 @@ namespace MyOwnSearchEngine
             return null;
         }
 
-        private string GetResult(int value)
+        private string GetResult(BigInteger value)
         {
             return Div(Escape($"{value} = 0x{value.ToString("X")}"));
         }

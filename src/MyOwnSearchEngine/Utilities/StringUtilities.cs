@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Numerics;
 
 namespace MyOwnSearchEngine
 {
@@ -47,9 +48,19 @@ namespace MyOwnSearchEngine
             return i.ToString("X");
         }
 
+        public static string ToHex(this BigInteger i)
+        {
+            return i.ToString("X");
+        }
+
         public static bool TryParseHex(this string s, out int result)
         {
             return int.TryParse(s, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out result);
+        }
+
+        public static bool TryParseHex(this string s, out BigInteger result)
+        {
+            return BigInteger.TryParse(s, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out result);
         }
 
         public static bool IsPrintable(this char c)

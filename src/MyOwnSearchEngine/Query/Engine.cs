@@ -137,7 +137,8 @@ namespace MyOwnSearchEngine
             var integer = instance as Integer;
             if (integer != null && integer.Kind == IntegerKind.Decimal && typeof(T) == typeof(Double))
             {
-                return (T)(object)new Double(((Integer)instance).Value);
+                // uhm... yeah.
+                return (T)(object)new Double((double)((Integer)instance).Value);
             }
 
             return default(T);

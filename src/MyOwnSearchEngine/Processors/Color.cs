@@ -56,12 +56,12 @@ namespace MyOwnSearchEngine
                 var intList = list.GetStructuresOfType<Integer>();
                 if (intList.Count == 3)
                 {
-                    int r = intList[0].Value;
-                    int g = intList[1].Value;
-                    int b = intList[2].Value;
+                    var r = intList[0].Value;
+                    var g = intList[1].Value;
+                    var b = intList[2].Value;
                     if (r >= 0 && r < 256 && g >= 0 && g < 256 && b >= 0 && b < 256)
                     {
-                        return GetResult(r, g, b);
+                        return GetResult((int)r, (int)g, (int)b);
                     }
                 }
             }

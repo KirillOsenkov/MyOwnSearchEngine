@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+﻿using System.Numerics;
 
 namespace MyOwnSearchEngine
 {
@@ -10,14 +10,14 @@ namespace MyOwnSearchEngine
 
     public class Integer : IStructureParser
     {
-        public int Value { get; }
+        public BigInteger Value { get; }
         public IntegerKind Kind { get; private set; }
 
         public Integer()
         {
         }
 
-        public Integer(int i)
+        public Integer(BigInteger i)
         {
             Value = i;
         }
@@ -31,8 +31,8 @@ namespace MyOwnSearchEngine
         {
             var trimmed = query.Trim();
 
-            int result = 0;
-            if (int.TryParse(trimmed, out result))
+            BigInteger result = 0;
+            if (BigInteger.TryParse(trimmed, out result))
             {
                 return new Integer(result);
             }
