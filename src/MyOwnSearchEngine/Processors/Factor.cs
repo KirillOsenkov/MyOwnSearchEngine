@@ -14,29 +14,6 @@ namespace MyOwnSearchEngine
                 return GetResult(integer.Value);
             }
 
-            var separatedList = query.TryGetStructure<SeparatedList>();
-            if (separatedList != null && separatedList.Count == 2)
-            {
-                var number = separatedList.TryGetStructure<Integer>(0);
-                if (number != null)
-                {
-                    var keyword1 = separatedList.TryGetStructure<Keyword>(1);
-                    if (keyword1 == "factor")
-                    {
-                        return GetResult(number.Value);
-                    }
-                }
-                else
-                {
-                    number = separatedList.TryGetStructure<Integer>(1);
-                    var keyword1 = separatedList.TryGetStructure<Keyword>(0);
-                    if (number != null && keyword1 == "factor")
-                    {
-                        return GetResult(number.Value);
-                    }
-                }
-            }
-
             return null;
         }
 

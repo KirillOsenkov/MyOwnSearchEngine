@@ -23,6 +23,14 @@ namespace MyOwnSearchEngine
             SeparatorChar = separatorChar;
         }
 
+        public object this[int index]
+        {
+            get
+            {
+                return Parts[index];
+            }
+        }
+
         public IReadOnlyList<T> GetStructuresOfType<T>() where T : IStructureParser
         {
             List<T> result = new List<T>();
