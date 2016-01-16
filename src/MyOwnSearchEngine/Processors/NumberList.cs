@@ -29,6 +29,7 @@ namespace MyOwnSearchEngine
             var list = numbersList.Select(l => l.Value).ToList();
 
             sb.AppendLine(Div("Sum: " + list.Sum()));
+            sb.AppendLine(Div("Product: " + list.Aggregate(1.0, (n, m) => n * m)));
             sb.AppendLine(Div("Average: " + list.Average()));
             sb.AppendLine(Div("Min: " + list.Min()));
             sb.AppendLine(Div("Max: " + list.Max()));
