@@ -41,7 +41,8 @@ namespace MyOwnSearchEngine
                     int character = i + column * columnLength;
                     var number = Td(character.ToString(), "style=\"color: lightseagreen\"");
                     var hex = Td(character.ToHex(), "style=\"color: lightgray\"");
-                    var text = Encoding.GetEncoding(1252).GetString(new byte[] { (byte)character });
+                    var encoding = Encoding.GetEncoding("latin1");
+                    var text = encoding.GetString(new byte[] { (byte)character });
                     var characterText = Td(Escape(text), "style=\"column-width: 60px\"");
                     sb.Append(number + hex + characterText);
                 }
