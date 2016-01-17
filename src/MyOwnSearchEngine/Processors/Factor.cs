@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
+using Number = System.Int32;
 
 namespace MyOwnSearchEngine
 {
@@ -9,22 +10,36 @@ namespace MyOwnSearchEngine
         public string GetResult(Query query)
         {
             var integer = query.TryGetStructure<Integer>();
-            if (integer != null)
+            if (integer != null && integer.Value > -10000000 && integer.Value < 10000000)
             {
-                return GetResult(integer.Value);
+                return GetResult((int)integer.Value);
             }
 
             return null;
         }
 
-        private string GetResult(BigInteger number)
+        private string GetResult(Number number)
         {
-            number = BigInteger.Abs(number);
-
-            var factors = new List<BigInteger>();
-            var bound = number / 2;
-            for (long i = 2; i <= bound; i++)
+            if (number < 0)
             {
+                number = -number;
+            }
+
+            if (number < 4 || number > 10000000)
+            {
+                return null;
+            }
+
+            var factors = new List<Number>();
+            var bound = number / 2;
+            for (Number i = 2; i <= bound; i++)
+            {
+                if (i > 3)
+                {
+                    // skip further even divisors
+                    i++;
+                }
+
                 while (number % i == 0)
                 {
                     number /= i;
