@@ -71,7 +71,7 @@ namespace MyOwnSearchEngine
                 hashPrefix.PrefixString == "#")
             {
                 var remainderString = hashPrefix.RemainderString;
-                if (remainderString.Length == 3 || remainderString.Length == 6)
+                if (remainderString.Length == 3 || remainderString.Length == 6 || remainderString.Length == 8)
                 {
                     var integer = Engine.TryGetStructure<Integer>(hashPrefix.Remainder);
                     if (integer != null)
@@ -89,6 +89,7 @@ namespace MyOwnSearchEngine
             int r;
             int g;
             int b;
+            int a;
 
             if (hexString.Length == 3)
             {
@@ -96,11 +97,18 @@ namespace MyOwnSearchEngine
                 g = int.Parse(new string(hexString[1], 2), NumberStyles.AllowHexSpecifier);
                 b = int.Parse(new string(hexString[2], 2), NumberStyles.AllowHexSpecifier);
             }
-            else
+            else if (hexString.Length == 6)
             {
                 r = int.Parse(hexString.Substring(0, 2), NumberStyles.AllowHexSpecifier);
                 g = int.Parse(hexString.Substring(2, 2), NumberStyles.AllowHexSpecifier);
                 b = int.Parse(hexString.Substring(4, 2), NumberStyles.AllowHexSpecifier);
+            }
+            else
+            {
+                a = int.Parse(hexString.Substring(0, 2), NumberStyles.AllowHexSpecifier);
+                r = int.Parse(hexString.Substring(2, 2), NumberStyles.AllowHexSpecifier);
+                g = int.Parse(hexString.Substring(4, 2), NumberStyles.AllowHexSpecifier);
+                b = int.Parse(hexString.Substring(6, 2), NumberStyles.AllowHexSpecifier);
             }
 
             return GetResult(r, g, b);
@@ -121,7 +129,7 @@ namespace MyOwnSearchEngine
 
             result.AppendLine(GetCanvas(hexColor, 350, 215, ";margin-top:20px"));
 
-            var nearestColors = GetNearestColors(r, g, b).Take(9);
+            var nearestColors = GetNearestColors(r, g, b).Take(10);
             result.AppendLine(Div("Closest named colors:"));
             foreach (var nearestColor in nearestColors)
             {
