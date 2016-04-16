@@ -55,7 +55,7 @@ namespace MyOwnSearchEngine
                     var result = Instance.GetSingleResponseWorker(singleQuery, request);
                     if (result != null)
                     {
-                        sb.AppendLine("<div style=\"margin: 0px\">");
+                        sb.AppendLine("<div style=\"margin-right: 20px\">");
                         sb.AppendLine(H1(singleQuery));
                         if (!string.IsNullOrEmpty(result))
                         {
