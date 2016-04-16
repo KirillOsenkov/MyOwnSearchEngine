@@ -26,6 +26,9 @@ namespace MyOwnSearchEngine
             // Configure the HTTP request pipeline.
             app.UseFileServer();
 
+            // this is needed to get the client IP address
+            app.UseIISPlatformHandler();
+
             // Add MVC to the request pipeline.
             app.UseMvc();
             // Add the following route for porting Web API 2 controllers.
